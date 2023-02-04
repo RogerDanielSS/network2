@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="320.0" style="-fx-background-color: rgba(250,0,0,0);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="110.0" layoutY="-50.0" prefHeight="150.0" prefWidth="320.0" style="-fx-background-radius: 8px; -fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <GridPane hgap="10.0" vgap="5.0">
+                     <children>
+                        <Label text="Material:">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="10.0" layoutY="12.0" text="Quant.:" GridPane.columnIndex="1">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="product_ChoiceBox" prefWidth="214.0" style="-fx-background-color: white; -fx-border-radius: 10; -fx-border-color: rgb(110, 51, 18);" GridPane.rowIndex="1" />
+                        <TextField fx:id="quantity" promptText="Quant." style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #6e3312; -fx-border-radius: 10;" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="213.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+            <TextField fx:id="address" promptText="Endereco" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #6e3312; -fx-border-radius: 10;" text="0">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </TextField>
+            <GridPane vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Responsavel:" />
+                  <Label text="Status: " GridPane.rowIndex="1" />
+                  <Label fx:id="responsible" text="&gt;&gt;responsavel&lt;&lt;" visible="false" GridPane.columnIndex="1" />
+                  <Label fx:id="status" text="..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="catchButton" minHeight="-Infinity" mnemonicParsing="false" prefWidth="92.0" style="-fx-border-color: rgb(110, 51, 18); -fx-background-color: rgba(0,0,0,0); -fx-border-radius: 10;" text="Pegar" textFill="#6e3312" visible="false" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </GridPane>
+            <HBox alignment="CENTER_RIGHT">
+               <children>
+                  <Button fx:id="ToggleEdit" minHeight="-Infinity" mnemonicParsing="false" prefWidth="92.0" style="-fx-border-color: rgb(110, 51, 18); -fx-background-color: rgba(0,0,0,0); -fx-border-radius: 10;" text="Ok" textFill="#6e3312">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

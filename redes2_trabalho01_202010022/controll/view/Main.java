@@ -1,7 +1,11 @@
 package redes2_trabalho01_202010022.controll.view;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -41,21 +45,62 @@ public class Main implements Initializable {
   @FXML
   private Button start;
 
+  ArrayList<AnchorPane> packages = new ArrayList<>();
+  ArrayList<FXMLLoader> packages1 = new ArrayList<>();
+
+  private void addPackage(AnchorPane packagePane) {
+    background.getChildren().add(packagePane);
+    packages.add(packagePane);
+  }
+
+  private HashMap<String, Integer> getCoordinates(String spot) {
+    Map<String, Integer> coordinates = new HashMap<>();
+
+    switch (spot) {
+      case "host1":
+        coordinates.put("x", (int) (host1.getLayoutX() + host1.getFitWidth() / 2));
+        coordinates.put("y", (int) (host1.getLayoutY() + host1.getFitHeight() / 2));
+        break;
+      case "host2":
+        coordinates.put("x", (int) (host2.getLayoutX() + host2.getFitWidth() / 2));
+        coordinates.put("y", (int) (host2.getLayoutY() + host2.getFitHeight() / 2));
+        break;
+      case "router1":
+        coordinates.put("x", (int) (router1.getLayoutX() + router1.getFitWidth() / 2));
+        coordinates.put("y", (int) (router1.getLayoutY() + router1.getFitHeight() / 2));
+        break;
+      case "router2":
+        coordinates.put("x", (int) (router2.getLayoutX() + router2.getFitWidth() / 2));
+        coordinates.put("y", (int) (router2.getLayoutY() + router2.getFitHeight() / 2));
+        break;
+      case "router3":
+        coordinates.put("x", (int) (router3.getLayoutX() + router3.getFitWidth() / 2));
+        coordinates.put("y", (int) (router3.getLayoutY() + router3.getFitHeight() / 2));
+        break;
+      case "router4":
+        coordinates.put("x", (int) (router4.getLayoutX() + router4.getFitWidth() / 2));
+        coordinates.put("y", (int) (router4.getLayoutY() + router4.getFitHeight() / 2));
+        break;
+      case "router5":
+        coordinates.put("x", (int) (router5.getLayoutX() + router5.getFitWidth() / 2));
+        coordinates.put("y", (int) (router5.getLayoutY() + router5.getFitHeight() / 2));
+        break;
+      default:
+        coordinates.put("x", 0);
+        coordinates.put("y", 0);
+    }
+  }
+
   private AnchorPane createPackage() {
     AnchorPane packagePane = new AnchorPane();
 
     try {
-      URL component_url = getClass().getResource("redes2_trabalho01_202010022/view/components/package.fxml");
+      URL component_url = new File("redes2_trabalho01_202010022/view/components/package.fxml").toURI().toURL();
       FXMLLoader fxmlLoader = new FXMLLoader();
 
       packagePane = fxmlLoader.load(component_url.openStream());
 
-      background.getChildren().add(packagePane);
-
-      // Package pkg = (Package) fxmlLoader.getController();
-
-      packagePane.setLayoutX(host1.getLayoutX());
-      packagePane.setLayoutY(host1.getLayoutY());
+      packages1.add(fxmlLoader);
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -67,7 +112,39 @@ public class Main implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     start.setOnAction(event -> {
-      createPackage();
+      AnchorPane packagePane = createPackage();
+      addPackage(packagePane);
+
+      packagePane.setLayoutX(host1.getLayoutX());
+      packagePane.setLayoutY(host1.getLayoutY());
     });
   }
+
+  private class PackageThread extends Thread {
+
+    private void send(String originSpot, String destinationSpot) {
+      Map<String, Integer> origin = getCoordinates(originSpot);
+      Map<String, Integer> destionation = getCoordinates(destinationSpot);
+    }// driveTo method ends here
+
+    /*********************************************************************
+     * Metodo: setVel
+     * Funcao: Muda a velocidade dos carros
+     * Parametros: Nova velocidade
+     * Retorno: void
+     *********************************************************************/
+    // public void setVel(double vel) {
+    // this.vel = vel;
+    // }
+
+    /*********************************************************************
+     * Metodo: run
+     * Funcao: Executa a rotina da thread
+     * Parametros: void
+     * Retorno: void
+     *********************************************************************/
+    public void run() {
+
+    }// run method ends here
+  }// car class ends here
 }

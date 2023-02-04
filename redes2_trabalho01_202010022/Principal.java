@@ -1,5 +1,8 @@
 package redes2_trabalho01_202010022;
 
+import java.io.File;
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,7 +30,9 @@ public class Principal extends Application { // Inicio da classe Principal
    */
   @Override
   public void start(Stage stage) throws Exception { // inicio do metodo start
-    Parent root = FXMLLoader.load(getClass().getResource("view/main.fxml"));
+    URL url = new File("redes2_trabalho01_202010022/view/main.fxml").toURI().toURL();
+    Parent root = FXMLLoader.load(url);
+    // Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("/view/main.fxml"));
     Scene Scene = new Scene(root);
     stage.setScene(Scene);
     stage.setResizable(false);
