@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(45,45,45);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(45,45,45);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="redes2_trabalho01_202010022.controll.view.Main">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,40 +20,41 @@
             </ColorAdjust>
          </effect>
       </ImageView>
-      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="44.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="host1" fitHeight="60.0" fitWidth="60.0" layoutX="44.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/computer_purple.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="502.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="host2" fitHeight="60.0" fitWidth="60.0" layoutX="502.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/computer_purple.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="139.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="router1" fitHeight="45.0" fitWidth="45.0" layoutX="139.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/router_purple.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="278.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="router2" fitHeight="45.0" fitWidth="45.0" layoutX="278.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/router_purple.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="421.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="router3" fitHeight="45.0" fitWidth="45.0" layoutX="421.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/router_purple.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="278.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="router4" fitHeight="45.0" fitWidth="45.0" layoutX="278.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/router_purple.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="278.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="router5" fitHeight="45.0" fitWidth="45.0" layoutX="278.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/router_purple.png" />
          </image>
       </ImageView>
+      <Button fx:id="start" layoutX="24.0" layoutY="29.0" mnemonicParsing="false" text="start" />
    </children>
 </AnchorPane>
