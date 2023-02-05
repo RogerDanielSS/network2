@@ -46,14 +46,14 @@ public class Main implements Initializable {
   private Button start;
 
   ArrayList<AnchorPane> packages = new ArrayList<>();
-  ArrayList<FXMLLoader> packages1 = new ArrayList<>();
+  ArrayList<Package> packagesControllers = new ArrayList<>();
 
   private void addPackage(AnchorPane packagePane) {
     background.getChildren().add(packagePane);
     packages.add(packagePane);
   }
 
-  private HashMap<String, Integer> getCoordinates(String spot) {
+  private Map<String, Integer> getCoordinates(String spot) {
     Map<String, Integer> coordinates = new HashMap<>();
 
     switch (spot) {
@@ -89,6 +89,8 @@ public class Main implements Initializable {
         coordinates.put("x", 0);
         coordinates.put("y", 0);
     }
+
+    return coordinates;
   }
 
   private AnchorPane createPackage() {
@@ -100,7 +102,7 @@ public class Main implements Initializable {
 
       packagePane = fxmlLoader.load(component_url.openStream());
 
-      packages1.add(fxmlLoader);
+      packagesControllers.add((Package) fxmlLoader.getController());
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -117,15 +119,48 @@ public class Main implements Initializable {
 
       packagePane.setLayoutX(host1.getLayoutX());
       packagePane.setLayoutY(host1.getLayoutY());
+      Map<String, String> origin = new HashMap<>();
+      Map<String, String> destination = new HashMap<>();
+
+      origin.put("x", host1.getLayoutX() + "");
+      origin.put("y", host1.getLayoutY() + "");
+
+      destination.put("x", router1.getLayoutX() + "");
+      destination.put("y", router1.getLayoutY() + "");
+
+      packagesControllers.get(0).setOriginAndDestination(origin, destination);
+
+      PackageThread PT = new PackageThread();
+      PT.start();
     });
   }
 
   private class PackageThread extends Thread {
 
-    private void send(String originSpot, String destinationSpot) {
+    // ArrayList AnchorPane
+
+    private void send(String originSpot, String destinationSpot, AnchorPane packagePane) {
       Map<String, Integer> origin = getCoordinates(originSpot);
-      Map<String, Integer> destionation = getCoordinates(destinationSpot);
-    }// driveTo method ends here
+      Map<String, Integer> destination = getCoordinates(destinationSpot);
+
+      double x = origin.get("x") - destination.get("x");
+      double y = origin.get("y") - destination.get("y");
+
+      x /= 200;
+      y /= 200;
+
+      while (packagePane.getLayoutX() != destination.get("x")) {
+        packagePane.setLayoutX(x);
+        packagePane.setLayoutY(y);
+
+        try {
+          sleep(1000);
+        } catch (InterruptedException e) {
+          System.out.println("error in sleep method");
+          e.printStackTrace();
+        }
+      }
+    }// send method ends here
 
     /*********************************************************************
      * Metodo: setVel
@@ -144,7 +179,18 @@ public class Main implements Initializable {
      * Retorno: void
      *********************************************************************/
     public void run() {
+      while (true) {
+        packages.get(0).setLayoutX(packages.get(0).getLayoutX() + packagesControllers.get(0).getSumX());
+        packages.get(0).setLayoutY(packages.get(0).getLayoutY() + packagesControllers.get(0).getSumY());
+        System.out.println(packagesControllers.get(0).getSumY());
 
+        try {
+          sleep(100);
+        } catch (InterruptedException e) {
+          System.out.println("error in sleep method");
+          e.printStackTrace();
+        }
+      }
     }// run method ends here
   }// car class ends here
 }
