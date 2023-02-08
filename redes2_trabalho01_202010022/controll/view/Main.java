@@ -53,41 +53,42 @@ public class Main implements Initializable {
     packages.add(packagePane);
   }
 
-  private Map<String, Integer> getCoordinates(String spot) {
-    Map<String, Integer> coordinates = new HashMap<>();
+  private Map<String, String> getCoordinates(String spot) {
+    Map<String, String> coordinates = new HashMap<>();
+    coordinates.put("name", spot);
 
     switch (spot) {
       case "host1":
-        coordinates.put("x", (int) (host1.getLayoutX() + host1.getFitWidth() / 2));
-        coordinates.put("y", (int) (host1.getLayoutY() + host1.getFitHeight() / 2));
+        coordinates.put("x", "" + (host1.getLayoutX() + host1.getFitWidth() / 2));
+        coordinates.put("y", "" + (host1.getLayoutY() + host1.getFitHeight() / 2));
         break;
       case "host2":
-        coordinates.put("x", (int) (host2.getLayoutX() + host2.getFitWidth() / 2));
-        coordinates.put("y", (int) (host2.getLayoutY() + host2.getFitHeight() / 2));
+        coordinates.put("x", "" + (host2.getLayoutX() + host2.getFitWidth() / 2));
+        coordinates.put("y", "" + (host2.getLayoutY() + host2.getFitHeight() / 2));
         break;
       case "router1":
-        coordinates.put("x", (int) (router1.getLayoutX() + router1.getFitWidth() / 2));
-        coordinates.put("y", (int) (router1.getLayoutY() + router1.getFitHeight() / 2));
+        coordinates.put("x", "" + (router1.getLayoutX() + router1.getFitWidth() / 2));
+        coordinates.put("y", "" + (router1.getLayoutY() + router1.getFitHeight() / 2));
         break;
       case "router2":
-        coordinates.put("x", (int) (router2.getLayoutX() + router2.getFitWidth() / 2));
-        coordinates.put("y", (int) (router2.getLayoutY() + router2.getFitHeight() / 2));
+        coordinates.put("x", "" + (router2.getLayoutX() + router2.getFitWidth() / 2));
+        coordinates.put("y", "" + (router2.getLayoutY() + router2.getFitHeight() / 2));
         break;
       case "router3":
-        coordinates.put("x", (int) (router3.getLayoutX() + router3.getFitWidth() / 2));
-        coordinates.put("y", (int) (router3.getLayoutY() + router3.getFitHeight() / 2));
+        coordinates.put("x", "" + (router3.getLayoutX() + router3.getFitWidth() / 2));
+        coordinates.put("y", "" + (router3.getLayoutY() + router3.getFitHeight() / 2));
         break;
       case "router4":
-        coordinates.put("x", (int) (router4.getLayoutX() + router4.getFitWidth() / 2));
-        coordinates.put("y", (int) (router4.getLayoutY() + router4.getFitHeight() / 2));
+        coordinates.put("x", "" + (router4.getLayoutX() + router4.getFitWidth() / 2));
+        coordinates.put("y", "" + (router4.getLayoutY() + router4.getFitHeight() / 2));
         break;
       case "router5":
-        coordinates.put("x", (int) (router5.getLayoutX() + router5.getFitWidth() / 2));
-        coordinates.put("y", (int) (router5.getLayoutY() + router5.getFitHeight() / 2));
+        coordinates.put("x", "" + (router5.getLayoutX() + router5.getFitWidth() / 2));
+        coordinates.put("y", "" + (router5.getLayoutY() + router5.getFitHeight() / 2));
         break;
       default:
-        coordinates.put("x", 0);
-        coordinates.put("y", 0);
+        coordinates.put("x", "" + (host1.getLayoutX() + host1.getFitWidth() / 2));
+        coordinates.put("y", "" + (host1.getLayoutY() + host1.getFitHeight() / 2));
     }
 
     return coordinates;
@@ -119,16 +120,8 @@ public class Main implements Initializable {
 
       packagePane.setLayoutX(host1.getLayoutX());
       packagePane.setLayoutY(host1.getLayoutY());
-      Map<String, String> origin = new HashMap<>();
-      Map<String, String> destination = new HashMap<>();
 
-      origin.put("x", host1.getLayoutX() + "");
-      origin.put("y", host1.getLayoutY() + "");
-
-      destination.put("x", router1.getLayoutX() + "");
-      destination.put("y", router1.getLayoutY() + "");
-
-      packagesControllers.get(0).setOriginAndDestination(origin, destination);
+      packagesControllers.get(0).setOriginAndDestination(getCoordinates("host1"), getCoordinates("router1"));
 
       PackageThread PT = new PackageThread();
       PT.start();
@@ -180,9 +173,17 @@ public class Main implements Initializable {
      *********************************************************************/
     public void run() {
       while (true) {
-        packages.get(0).setLayoutX(packages.get(0).getLayoutX() + packagesControllers.get(0).getSumX());
-        packages.get(0).setLayoutY(packages.get(0).getLayoutY() + packagesControllers.get(0).getSumY());
-        System.out.println(packagesControllers.get(0).getSumY());
+        if (!packagesControllers.get(0).isArrived((int) packages.get(0).getLayoutX(),
+            (int) packages.get(0).getLayoutY())) {
+
+          packages.get(0).setLayoutX(packages.get(0).getLayoutX() + packagesControllers.get(0).getSumX());
+          packages.get(0).setLayoutY(packages.get(0).getLayoutY() + packagesControllers.get(0).getSumY());
+          System.out.println(packages.get(0).getLayoutX());
+          System.out.println(packages.get(0).getLayoutY());
+          System.out.println(packagesControllers.get(0).getDestination());
+
+        }
+        System.out.println(packagesControllers.get(0).getSumX());
 
         try {
           sleep(100);

@@ -57,4 +57,8 @@ public class Package {
   public double getSumY(){
     return sumY;
   }
+
+  public boolean isArrived(int x, int y){
+    return Double.parseDouble(destination.get("x")) == x && Double.parseDouble(destination.get("y")) == y;
+  }
 }
