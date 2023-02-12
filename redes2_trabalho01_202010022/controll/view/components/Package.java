@@ -59,6 +59,7 @@ public class Package {
   }
 
   public boolean isArrived(int x, int y){
-    return Double.parseDouble(destination.get("x")) == x && Double.parseDouble(destination.get("y")) == y;
+    return (int) Double.parseDouble(destination.get("x")) == x && 
+    (int) Double.parseDouble(destination.get("y")) == y;
   }
 }
