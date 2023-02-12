@@ -43,7 +43,13 @@ public class Main implements Initializable {
   private ImageView router1;
 
   @FXML
-  private Button start;
+  private ImageView router6;
+
+  @FXML
+  private ImageView router7;
+
+  @FXML
+  private Button start, teste;
 
   ArrayList<AnchorPane> packages = new ArrayList<>();
   ArrayList<Package> packagesControllers = new ArrayList<>();
@@ -86,12 +92,48 @@ public class Main implements Initializable {
         coordinates.put("x", "" + (router5.getLayoutX() + router5.getFitWidth() / 2));
         coordinates.put("y", "" + (router5.getLayoutY() + router5.getFitHeight() / 2));
         break;
+      case "router6":
+        coordinates.put("x", "" + (router6.getLayoutX() + router6.getFitWidth() / 2));
+        coordinates.put("y", "" + (router6.getLayoutY() + router6.getFitHeight() / 2));
+        break;
+      case "router7":
+        coordinates.put("x", "" + (router7.getLayoutX() + router7.getFitWidth() / 2));
+        coordinates.put("y", "" + (router7.getLayoutY() + router7.getFitHeight() / 2));
+        break;
       default:
         coordinates.put("x", "" + (host1.getLayoutX() + host1.getFitWidth() / 2));
         coordinates.put("y", "" + (host1.getLayoutY() + host1.getFitHeight() / 2));
     }
 
     return coordinates;
+  }
+
+  private ImageView getSpot(String spot) {
+    Map<String, String> coordinates = new HashMap<>();
+    coordinates.put("name", spot);
+
+    switch (spot) {
+      case "host1":
+        return host1;
+      case "host2":
+        return host2;
+      case "router1":
+        return router1;
+      case "router2":
+        return router2;
+      case "router3":
+        return router3;
+      case "router4":
+        return router4;
+      case "router5":
+        return router5;
+      case "router6":
+        return router6;
+      case "router7":
+        return router7;
+      default:
+        return host1;
+    }
   }
 
   private AnchorPane createPackage() {
@@ -112,19 +154,32 @@ public class Main implements Initializable {
     return packagePane;
   }
 
+  private void setPackageOriginAndDestination(AnchorPane packagePane, String origin, String destination) {
+    packagePane.setLayoutX(getSpot(origin).getLayoutX() + getSpot(origin).getFitWidth() / 2);
+    packagePane.setLayoutY(getSpot(origin).getLayoutY() + getSpot(origin).getFitHeight() / 2);
+
+    packagesControllers.get(packagesControllers.size() - 1).setOriginAndDestination(getCoordinates(origin), getCoordinates(destination));
+  }
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     start.setOnAction(event -> {
       AnchorPane packagePane = createPackage();
+
+      setPackageOriginAndDestination(packagePane, "router3", "router2");
+
       addPackage(packagePane);
-
-      packagePane.setLayoutX(host1.getLayoutX());
-      packagePane.setLayoutY(host1.getLayoutY());
-
-      packagesControllers.get(0).setOriginAndDestination(getCoordinates("host1"), getCoordinates("router1"));
 
       PackageThread PT = new PackageThread();
       PT.start();
+    });
+    
+    teste.setOnAction(event -> {
+      AnchorPane packagePane = createPackage();
+
+      setPackageOriginAndDestination(packagePane, "router1", "router7");
+      
+      addPackage(packagePane);
     });
   }
 
@@ -132,58 +187,25 @@ public class Main implements Initializable {
 
     // ArrayList AnchorPane
 
-    private void send(String originSpot, String destinationSpot, AnchorPane packagePane) {
-      Map<String, Integer> origin = getCoordinates(originSpot);
-      Map<String, Integer> destination = getCoordinates(destinationSpot);
+    private void send(int packageIndex) {
+      System.out.println("\n" + packageIndex + "\n");
 
-      double x = origin.get("x") - destination.get("x");
-      double y = origin.get("y") - destination.get("y");
+      if (!packagesControllers.get(packageIndex).isArrived((int) packages.get(packageIndex).getLayoutX(),
+          (int) packages.get(packageIndex).getLayoutY())) {
 
-      x /= 200;
-      y /= 200;
-
-      while (packagePane.getLayoutX() != destination.get("x")) {
-        packagePane.setLayoutX(x);
-        packagePane.setLayoutY(y);
-
-        try {
-          sleep(1000);
-        } catch (InterruptedException e) {
-          System.out.println("error in sleep method");
-          e.printStackTrace();
-        }
+        packages.get(packageIndex)
+            .setLayoutX(packages.get(packageIndex).getLayoutX() + packagesControllers.get(packageIndex).getSumX());
+        packages.get(packageIndex)
+            .setLayoutY(packages.get(packageIndex).getLayoutY() + packagesControllers.get(packageIndex).getSumY());
       }
-    }// send method ends here
+    }
 
-    /*********************************************************************
-     * Metodo: setVel
-     * Funcao: Muda a velocidade dos carros
-     * Parametros: Nova velocidade
-     * Retorno: void
-     *********************************************************************/
-    // public void setVel(double vel) {
-    // this.vel = vel;
-    // }
-
-    /*********************************************************************
-     * Metodo: run
-     * Funcao: Executa a rotina da thread
-     * Parametros: void
-     * Retorno: void
-     *********************************************************************/
     public void run() {
       while (true) {
-        if (!packagesControllers.get(0).isArrived((int) packages.get(0).getLayoutX(),
-            (int) packages.get(0).getLayoutY())) {
 
-          packages.get(0).setLayoutX(packages.get(0).getLayoutX() + packagesControllers.get(0).getSumX());
-          packages.get(0).setLayoutY(packages.get(0).getLayoutY() + packagesControllers.get(0).getSumY());
-          System.out.println(packages.get(0).getLayoutX());
-          System.out.println(packages.get(0).getLayoutY());
-          System.out.println(packagesControllers.get(0).getDestination());
-
+        for (int packageIndex = 0; packageIndex < packages.size(); packageIndex++) {
+          send(packageIndex);
         }
-        System.out.println(packagesControllers.get(0).getSumX());
 
         try {
           sleep(100);
