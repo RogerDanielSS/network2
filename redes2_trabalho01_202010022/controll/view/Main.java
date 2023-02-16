@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,41 +23,35 @@ public class Main implements Initializable {
   private AnchorPane background;
 
   @FXML
-  private ImageView host1;
-
-  @FXML
-  private ImageView host2;
-
-  @FXML
-  private ImageView router5;
-
-  @FXML
-  private ImageView router4;
-
-  @FXML
-  private ImageView router3;
-
-  @FXML
-  private ImageView router2;
-
-  @FXML
-  private ImageView router1;
-
-  @FXML
-  private ImageView router6;
-
-  @FXML
-  private ImageView router7;
+  private ImageView host1, host2, router1, router2, router3, router4, router5, router6, router7;
 
   @FXML
   private Button start, teste;
 
   ArrayList<AnchorPane> packages = new ArrayList<>();
   ArrayList<Package> packagesControllers = new ArrayList<>();
+  Spot host1S, host2S, router1S, router2S, router3S, router4S, router5S, router6S, router7S;
+
+  private void instatiateSpots(){
+    host1S = new Spot("host1");
+    host2S = new Spot("host2");
+    router1S = new Spot("router1");
+    router2S = new Spot("router2");
+    router3S = new Spot("router3");
+    router4S = new Spot("router4");
+    router5S = new Spot("router5");
+    router6S = new Spot("router6");
+    router7S = new Spot("router7");
+  }
 
   private void addPackage(AnchorPane packagePane) {
     background.getChildren().add(packagePane);
     packages.add(packagePane);
+  }
+
+  private void removePackage(AnchorPane packagePane) {
+    background.getChildren().remove(packagePane);
+    packages.remove(packagePane);
   }
 
   private Map<String, String> getCoordinates(String spot) {
@@ -154,11 +149,49 @@ public class Main implements Initializable {
     return packagePane;
   }
 
+  private synchronized AnchorPane clonePackage(Package packag, String subdestination) {
+    AnchorPane packagePane = new AnchorPane();
+
+    try {
+      URL component_url = new File("redes2_trabalho01_202010022/view/components/package.fxml").toURI().toURL();
+      FXMLLoader fxmlLoader = new FXMLLoader();
+
+      packagePane = fxmlLoader.load(component_url.openStream());
+
+      Package packageController = (Package) fxmlLoader.getController();
+
+      packageController.clone(packag);
+
+      setPackagePosition(packagePane, packageController);
+
+      packageController.addSpot(getCoordinates(subdestination));
+
+      packagesControllers.add(packageController);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    addPackage(packagePane);
+
+    return packagePane;
+  }
+
+  private void setPackagePosition(AnchorPane packagePane, Package packageController) {
+    ArrayList<Map<String, String>> path = packageController.getPath();
+
+    ImageView subOrigin = getSpot(path.get(path.size() - 1).get("name"));
+
+    packagePane.setLayoutX(subOrigin.getLayoutX() + subOrigin.getFitWidth() / 2);
+    packagePane.setLayoutY(subOrigin.getLayoutY() + subOrigin.getFitHeight() / 2);
+  }
+
   private void setPackageOriginAndDestination(AnchorPane packagePane, String origin, String destination) {
     packagePane.setLayoutX(getSpot(origin).getLayoutX() + getSpot(origin).getFitWidth() / 2);
     packagePane.setLayoutY(getSpot(origin).getLayoutY() + getSpot(origin).getFitHeight() / 2);
 
-    packagesControllers.get(packagesControllers.size() - 1).setOriginAndDestination(getCoordinates(origin), getCoordinates(destination));
+    packagesControllers.get(packagesControllers.size() - 1).setOriginAndDestination(getCoordinates(origin),
+        getCoordinates(destination));
   }
 
   @Override
@@ -170,33 +203,46 @@ public class Main implements Initializable {
 
       addPackage(packagePane);
 
-      PackageThread PT = new PackageThread();
+      PackageManager PT = new PackageManager();
       PT.start();
+      PT.setPriority(10);
     });
-    
+
     teste.setOnAction(event -> {
       AnchorPane packagePane = createPackage();
 
       setPackageOriginAndDestination(packagePane, "router1", "router7");
-      
-      addPackage(packagePane);
+
+      removePackage(packages.get(0));
     });
   }
 
-  private class PackageThread extends Thread {
+  private class PackageManager extends Thread {
 
     // ArrayList AnchorPane
 
     private void send(int packageIndex) {
       System.out.println("\n" + packageIndex + "\n");
 
-      if (!packagesControllers.get(packageIndex).isArrived((int) packages.get(packageIndex).getLayoutX(),
+      Package packageController = packagesControllers.get(packageIndex);
+
+      if (!packageController.isArrived((int) packages.get(packageIndex).getLayoutX(),
           (int) packages.get(packageIndex).getLayoutY())) {
 
         packages.get(packageIndex)
-            .setLayoutX(packages.get(packageIndex).getLayoutX() + packagesControllers.get(packageIndex).getSumX());
+            .setLayoutX(packages.get(packageIndex).getLayoutX() + packageController.getSumX());
         packages.get(packageIndex)
-            .setLayoutY(packages.get(packageIndex).getLayoutY() + packagesControllers.get(packageIndex).getSumY());
+            .setLayoutY(packages.get(packageIndex).getLayoutY() + packageController.getSumY());
+      } else {
+        getSpot(packageController.getLastSpotInPath().get("name")); // create new method that returns thread
+
+        Platform.runLater(new Runnable() {
+          @Override
+          public void run() {
+            removePackage(packages.get(packageIndex));
+          }
+        });
+        // packages.remove(packageIndex); // use to send package to router
       }
     }
 
@@ -216,4 +262,57 @@ public class Main implements Initializable {
       }
     }// run method ends here
   }// car class ends here
+
+  public class Spot extends Thread {
+    private String currentSpot;
+    Map<String, ArrayList<String>> routingTable;
+    ArrayList<Package> buffer;
+
+    public Spot(String spot){
+      this.currentSpot = spot;
+    } 
+
+    public void sendFirstPackageInBuffer() {
+
+      Package packag = buffer.remove(0);
+
+      ArrayList<String> spotsForDestination = this.routingTable.get(packag.getDestination());
+
+      for (int spotIndex = 0; spotIndex > spotsForDestination.size(); spotIndex++) {
+        clonePackage(packag, spotsForDestination.get(spotIndex));
+      }
+    }
+
+    public void setRoutingTable(Map<String, ArrayList<String>> routingTable) {
+      this.routingTable = routingTable;
+    }
+
+    public void addToRoutingTable(String key, String value) {
+      ArrayList<String> routes = this.routingTable.get(key);
+
+      routes.add(value);
+
+      this.routingTable.put(key, routes);
+    }
+
+    public void ReplaceRouteInRoutingTable(String key, String value) {
+      ArrayList<String> routes = new ArrayList<String>();
+
+      routes.add(value);
+
+      this.routingTable.put(key, routes);
+    }
+
+    public void setCurrentSpot(String currentSpot) {
+      this.currentSpot = currentSpot;
+    }
+
+    public String getCurrentSpot() {
+      return this.currentSpot;
+    }
+
+    public void run() {
+
+    }
+  }
 }
