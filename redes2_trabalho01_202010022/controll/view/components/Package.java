@@ -42,8 +42,12 @@ public class Package {
 
     if (path.size() > 1) {
       int size = path.size();
-      sumX = (Double.parseDouble(path.get(size - 2).get("x")) - Double.parseDouble(path.get(size - 1).get("x"))) / 100;
-      sumX = (Double.parseDouble(path.get(size - 2).get("y")) - Double.parseDouble(path.get(size - 1).get("y"))) / 100;
+      sumX = (Double.parseDouble(path.get(size - 1).get("x")) - Double.parseDouble(path.get(size - 2).get("x"))) / 100;
+      sumY = (Double.parseDouble(path.get(size - 1).get("y")) - Double.parseDouble(path.get(size - 2).get("y"))) / 100;
+      System.out.println("path.get(size - 1)");
+      System.out.println(path.get(size - 1));
+      System.out.println("path.get(size - 2)");
+      System.out.println(path.get(size - 2));
     }
   }
 
@@ -72,6 +76,7 @@ public class Package {
 
   public boolean isArrived(int x, int y){
     return (int) Double.parseDouble(destination.get("x")) == x && 
-    (int) Double.parseDouble(destination.get("y")) == y;
+    (int) Double.parseDouble(destination.get("y")) == y || (int) Double.parseDouble(path.get(path.size() - 1).get("x")) == x && 
+    (int) Double.parseDouble(path.get(path.size() - 1).get("y")) == y;
   }
 }
