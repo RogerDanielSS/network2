@@ -1,8 +1,8 @@
 package redes2_trabalho01_202010022.controll.view.components;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Package {
   private Map<String, String> origin;
@@ -16,11 +16,15 @@ public class Package {
   }
 
   public void setPath(ArrayList<Map<String, String>> path){
-    System.out.println("set Path");
     for(int pathIndex = 0; pathIndex < path.size(); pathIndex++){
-      Map<String, String> temp = path.get(pathIndex).entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> String.valueOf(e.getValue())));
+      System.out.println(path.get(pathIndex).keySet());
+      ArrayList<String> keys = new ArrayList<>(path.get(pathIndex).keySet());
+      Map<String, String> temp = new HashMap<String, String>();
+      for(int hashIndex = 0; hashIndex < keys.size(); hashIndex++){
+        temp.put(keys.get(hashIndex), path.get(pathIndex).get(keys.get(hashIndex)));
+      }
 
-      path.add(temp);
+      this.path.add(temp);
     }
   }
 
@@ -55,10 +59,6 @@ public class Package {
       int size = path.size();
       sumX = (Double.parseDouble(path.get(size - 1).get("x")) - Double.parseDouble(path.get(size - 2).get("x"))) / 100;
       sumY = (Double.parseDouble(path.get(size - 1).get("y")) - Double.parseDouble(path.get(size - 2).get("y"))) / 100;
-      // System.out.println("path.get(size - 1)");
-      // System.out.println(path.get(size - 1));
-      // System.out.println("path.get(size - 2)");
-      // System.out.println(path.get(size - 2));
     }
   }
 

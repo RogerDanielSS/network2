@@ -58,11 +58,21 @@ public class Main implements Initializable {
     router7S = new Spot("router7");
 
     ArrayList<String> neightboorsH1 = new ArrayList<>();
+    ArrayList<String> neightboorsH2 = new ArrayList<>();
     ArrayList<String> neightboorsR1 = new ArrayList<>();
+    ArrayList<String> neightboorsR2 = new ArrayList<>();
+    ArrayList<String> neightboorsR3 = new ArrayList<>();
+    ArrayList<String> neightboorsR4 = new ArrayList<>();
+    ArrayList<String> neightboorsR5 = new ArrayList<>();
+    ArrayList<String> neightboorsR6 = new ArrayList<>();
+    ArrayList<String> neightboorsR7 = new ArrayList<>();
     // ArrayList<String> neightboorsR2 = new ArrayList<>();
 
     neightboorsH1.add("router1");
     host1S.setRoutingTable(inundationTable("host1", neightboorsH1));
+
+    neightboorsH2.add("router4");
+    host2S.setRoutingTable(inundationTable("host2", neightboorsH2));
 
     neightboorsR1.add("host1");
     neightboorsR1.add("router2");
@@ -70,53 +80,49 @@ public class Main implements Initializable {
     neightboorsR1.add("router6");
     router1S.setRoutingTable(inundationTable("router1", neightboorsR1));
 
-    // neightboors.remove("router1");
-    // neightboors.add("router5");
-    // neightboors.add("host2");
-    // router1S.setRoutingTable(inundationTable("router4", neightboors));
+    neightboorsR2.add("router1");
+    neightboorsR2.add("router7");
+    neightboorsR2.add("router3");
+    router2S.setRoutingTable(inundationTable("router2", neightboorsR2));
 
-    // neightboors.remove("router3");
-    // neightboors.remove("host2");
-    // neightboors.add("router1");
-    // router6S.setRoutingTable(inundationTable("router6", neightboors));
+    neightboorsR3.add("router2");
+    neightboorsR3.add("router7");
+    neightboorsR3.add("router4");
+    router3S.setRoutingTable(inundationTable("router3", neightboorsR3));
 
-    // neightboors.remove("router1");
-    // neightboors.add("router6");
-    // neightboors.add("host1");
-    // router1S.setRoutingTable(inundationTable("router1", neightboors));
+    neightboorsR4.add("host2");
+    neightboorsR4.add("router3");
+    neightboorsR4.add("router7");
+    neightboorsR4.add("router5");
+    router4S.setRoutingTable(inundationTable("router4", neightboorsR4));
 
-    // neightboors.remove("router6");
-    // neightboors.remove("host1");
-    // neightboors.add("router4");
-    // router3S.setRoutingTable(inundationTable("router3", neightboors));
+    neightboorsR5.add("router6");
+    neightboorsR5.add("router7");
+    neightboorsR5.add("router4");
+    router5S.setRoutingTable(inundationTable("router5", neightboorsR5));
 
-    // neightboors.remove("router2");
-    // neightboors.add("router6");
-    // router5S.setRoutingTable(inundationTable("router5", neightboors));
+    neightboorsR6.add("router1");
+    neightboorsR6.add("router7");
+    neightboorsR6.add("router5");
+    router6S.setRoutingTable(inundationTable("router6", neightboorsR6));
 
-    // neightboors.remove("router7");
-    // neightboors.add("router5");
-    // neightboors.add("router1");
-    // neightboors.add("router2");
-    // neightboors.add("router3");
-    // router7S.setRoutingTable(inundationTable("router7", neightboors));
-
-    // neightboors.remove("router1");
-    // neightboors.remove("router2");
-    // neightboors.remove("router3");
-    // neightboors.remove("router5");
-    // neightboors.remove("router6");
-    // host2S.setRoutingTable(inundationTable("host2", neightboors));
+    neightboorsR7.add("router1");
+    neightboorsR7.add("router2");
+    neightboorsR7.add("router3");
+    neightboorsR7.add("router4");
+    neightboorsR7.add("router5");
+    neightboorsR7.add("router6");
+    router7S.setRoutingTable(inundationTable("router7", neightboorsR7));
 
     host1S.start();
-    // host2S.start();
+    host2S.start();
     router1S.start();
-    // router2S.start();
-    // router3S.start();
-    // router4S.start();
-    // router5S.start();
-    // router6S.start();
-    // router7S.start();
+    router2S.start();
+    router3S.start();
+    router4S.start();
+    router5S.start();
+    router6S.start();
+    router7S.start();
   }
 
   public ArrayList<String> getAllSpotsExcept(String spot) {
