@@ -260,13 +260,6 @@ public class Package {
    * Retorno: verdadeiro ou falso
    */
   public boolean isArrived(int x, int y) {
-    if (path.get(path.size() - 1).get("name") == "host2") {
-      System.out.println("destination");
-      System.out.println((int) Double.parseDouble(path.get(path.size() - 1).get("x")));
-      System.out.println((int) Double.parseDouble(path.get(path.size() - 1).get("y")));
-      System.out.println("package");
-      System.out.println("x: " + x + "y: " + y);
-    }
     return (int) Double.parseDouble(destination.get("x")) == x &&
         (int) Double.parseDouble(destination.get("y")) == y
         || (int) Double.parseDouble(path.get(path.size() - 1).get("x")) == x &&
