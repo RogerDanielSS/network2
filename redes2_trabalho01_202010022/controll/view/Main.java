@@ -7,7 +7,7 @@
 * Funcao...........: Simula o roteamento dentro de uma subrede usando inundação
 *************************************************************** */
 
-package redes2_trabalho01_202010022.controll.view;
+package controll.view;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import redes2_trabalho01_202010022.controll.view.components.Package;
+import controll.view.components.Package;
 
 public class Main implements Initializable {
 
@@ -433,7 +433,7 @@ public class Main implements Initializable {
     int id = addPackageId();
 
     try {
-      URL component_url = new File("redes2_trabalho01_202010022/view/components/package.fxml").toURI().toURL();
+      URL component_url = new File("view/components/package.fxml").toURI().toURL();
       FXMLLoader fxmlLoader = new FXMLLoader();
 
       packagePane = fxmlLoader.load(component_url.openStream());
@@ -452,7 +452,7 @@ public class Main implements Initializable {
     int id = addPackageId();
 
     try {
-      URL component_url = new File("redes2_trabalho01_202010022/view/components/package.fxml").toURI().toURL();
+      URL component_url = new File("view/components/package.fxml").toURI().toURL();
       FXMLLoader fxmlLoader = new FXMLLoader();
 
       packagePane = fxmlLoader.load(component_url.openStream());

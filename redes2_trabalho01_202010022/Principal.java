@@ -1,4 +1,3 @@
-
 /* *************************************************************** 
 * Autor............: Roger Daniel Santana Simoes
 * Matricula........: 202010022
@@ -7,8 +6,6 @@
 * Nome.............: Inundação
 * Funcao...........: Simula o roteamento dentro de uma subrede usando inundação
 *************************************************************** */
-package redes2_trabalho01_202010022;
-
 import java.io.File;
 import java.net.URL;
 
@@ -39,7 +36,7 @@ public class Principal extends Application { // Inicio da classe Principal
    */
   @Override
   public void start(Stage stage) throws Exception { // inicio do metodo start
-    URL url = new File("redes2_trabalho01_202010022/view/main.fxml").toURI().toURL();
+    URL url = new File("view/main.fxml").toURI().toURL();
     Parent root = FXMLLoader.load(url);
     // Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("/view/main.fxml"));
     Scene Scene = new Scene(root);

@@ -7,7 +7,7 @@
 * Nome.............: Inundação
 * Funcao...........: Simula o roteamento dentro de uma subrede usando inundação
 *************************************************************** */
-package redes2_trabalho01_202010022.controll.view.components;
+package controll.view.components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
