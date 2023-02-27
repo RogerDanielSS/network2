@@ -144,9 +144,9 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
+   * Metodo: getDestination
+   * Funcao: retorna o destino do pacote
+   * Parametros: vazio
    * Retorno: vazio
    */
   public Map<String, String> getDestination() {
@@ -155,9 +155,9 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
+   * Metodo: setDestination
+   * Funcao: setta o destino do pacote
+   * Parametros: destino do pacote
    * Retorno: vazio
    */
   public void setDestination(Map<String, String> destination) {
@@ -166,9 +166,9 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
+   * Metodo: addSpot
+   * Funcao: adiciona um spot ao path do pacote
+   * Parametros: spot a ser add
    * Retorno: vazio
    */
   public void addSpot(Map<String, String> spot) {
@@ -183,9 +183,9 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
+   * Metodo: getPath
+   * Funcao: retorna o path do pacote
+   * Parametros: vazio
    * Retorno: vazio
    */
   public ArrayList<Map<String, String>> getPath() {
@@ -194,10 +194,10 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
-   * Retorno: vazio
+   * Metodo: getLastSpotInPath
+   * Funcao: retorna o ultimo spot no path do pacote
+   * Parametros: vazio
+   * Retorno: spot
    */
   public Map<String, String> getLastSpotInPath() {
     return path.get(path.size() - 1);
@@ -205,10 +205,10 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
-   * Retorno: vazio
+   * Metodo: getLastSpotInPath
+   * Funcao: retorna o penultimo spot no path do pacote
+   * Parametros: vazio
+   * Retorno: spot
    */
   public Map<String, String> getLastButOneSpotInPath() {
     return path.get(path.size() - 2);
@@ -216,8 +216,9 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
+   * Metodo: setOriginAndDestination
+   * Funcao: setta a origem e o destino do pacote, alem de calcular a distancia a
+   * ser somada para definir visualmente a rota
    * Parametros: id de rede
    * Retorno: vazio
    */
@@ -231,10 +232,10 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
-   * Retorno: vazio
+   * Metodo: getSumX
+   * Funcao: retorna o valor da soma x
+   * Parametros: vazio
+   * Retorno: soma x
    */
   public double getSumX() {
     return sumX;
@@ -242,10 +243,10 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
-   * Retorno: vazio
+   * Metodo: getSumY
+   * Funcao: retorna o valor da soma y
+   * Parametros: vazio
+   * Retorno: soma y
    */
   public double getSumY() {
     return sumY;
@@ -253,10 +254,10 @@ public class Package {
 
   /*
    * ***************************************************************
-   * Metodo: setNetworkId
-   * Funcao: setta o id de rede
-   * Parametros: id de rede
-   * Retorno: vazio
+   * Metodo: isArrived
+   * Funcao: verifica se o path ja chegou no destino ou no ultimo spot no path
+   * Parametros: posicoes atuais do pacote
+   * Retorno: verdadeiro ou falso
    */
   public boolean isArrived(int x, int y) {
     if (path.get(path.size() - 1).get("name") == "host2") {
