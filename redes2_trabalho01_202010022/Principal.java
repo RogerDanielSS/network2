@@ -1,3 +1,12 @@
+
+/* *************************************************************** 
+* Autor............: Roger Daniel Santana Simoes
+* Matricula........: 202010022
+* Inicio...........: 06/02/2023
+* Ultima alteracao.: 19/02/2023
+* Nome.............: Inundação
+* Funcao...........: Simula o roteamento dentro de uma subrede usando inundação
+*************************************************************** */
 package redes2_trabalho01_202010022;
 
 import java.io.File;

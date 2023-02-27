@@ -1,3 +1,12 @@
+
+/* *************************************************************** 
+* Autor............: Roger Daniel Santana Simoes
+* Matricula........: 202010022
+* Inicio...........: 06/02/2023
+* Ultima alteracao.: 19/02/2023
+* Nome.............: Inundação
+* Funcao...........: Simula o roteamento dentro de uma subrede usando inundação
+*************************************************************** */
 package redes2_trabalho01_202010022.controll.view.components;
 
 import java.util.ArrayList;
@@ -9,47 +18,95 @@ public class Package {
   private Map<String, String> destination;
   private double sumX = 0;
   private double sumY = 0;
-  private int life = 4;
+  private int life = 6;
   private ArrayList<Map<String, String>> path = new ArrayList<>();
   private boolean dead = false;
   private int networkId = 1;
 
-  public Package() {
-
-  }
-
+  /*
+   * ***************************************************************
+   * Metodo: getNetworkId
+   * Funcao: retorna o id de rede
+   * Parametros: vazio
+   * Retorno: id de rede
+   */
   public int getNetworkId() {
     return this.networkId;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public void setNetworkId(int networkId) {
     this.networkId = networkId;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: kill
+   * Funcao: atualiza o status do pacote para morto
+   * Parametros: vazio
+   * Retorno: vazio
+   */
   public void kill() {
     this.dead = true;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: dead
+   * Funcao: informa se o pacote esta morto
+   * Parametros: vazio
+   * Retorno: vazio
+   */
   public boolean dead() {
     return this.dead;
   }
 
-  public void setDead(boolean dead) {
-    this.dead = dead;
-  }
-
+  /*
+   * ***************************************************************
+   * Metodo: descreaseLife
+   * Funcao: diminui a vida (ttl) do pacote
+   * Parametros: vazio
+   * Retorno: vazio
+   */
   public void descreaseLife() {
     life--;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setLife
+   * Funcao: setta o ttl do pacote
+   * Parametros: valor a ser settado
+   * Retorno: vazio
+   */
   public void setLife(int life) {
     this.life = life;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: getLife
+   * Funcao: retorna o valor do ttl
+   * Parametros: vazoi
+   * Retorno: valor do ttl
+   */
   public int getLife() {
     return this.life;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setPath
+   * Funcao: setta o path do pacote
+   * Parametros: path a ser settado
+   * Retorno: vazio
+   */
   public void setPath(ArrayList<Map<String, String>> path) {
     for (int pathIndex = 0; pathIndex < path.size(); pathIndex++) {
       ArrayList<String> keys = new ArrayList<>(path.get(pathIndex).keySet());
@@ -62,30 +119,58 @@ public class Package {
     }
   }
 
-  public void clone(Package packag) {
-    this.origin = packag.getOrigin();
-    this.destination = packag.getDestination();
-
-    this.path = packag.getPath();
-  }
-
+  /*
+   * ***************************************************************
+   * Metodo: getOrigin
+   * Funcao: retorna a origem do pacote
+   * Parametros: void
+   * Retorno: origem do pacote
+   */
   public Map<String, String> getOrigin() {
     return origin;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setOrigin
+   * Funcao: setta a origem do pacote =
+   * Parametros: origem a ser settada
+   * Retorno: vazion
+   */
   public void setOrigin(Map<String, String> origin) {
     this.origin = origin;
     path.add(origin);
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public Map<String, String> getDestination() {
     return destination;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public void setDestination(Map<String, String> destination) {
     this.destination = destination;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public void addSpot(Map<String, String> spot) {
     path.add(spot);
 
@@ -96,18 +181,46 @@ public class Package {
     }
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public ArrayList<Map<String, String>> getPath() {
     return path;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public Map<String, String> getLastSpotInPath() {
     return path.get(path.size() - 1);
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public Map<String, String> getLastButOneSpotInPath() {
     return path.get(path.size() - 2);
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public void setOriginAndDestination(Map<String, String> origin, Map<String, String> destination) {
     this.origin = origin;
     addSpot(origin);
@@ -116,14 +229,35 @@ public class Package {
     sumY = (Double.parseDouble(destination.get("y")) - Double.parseDouble(origin.get("y"))) / 100;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public double getSumX() {
     return sumX;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public double getSumY() {
     return sumY;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setNetworkId
+   * Funcao: setta o id de rede
+   * Parametros: id de rede
+   * Retorno: vazio
+   */
   public boolean isArrived(int x, int y) {
     if (path.get(path.size() - 1).get("name") == "host2") {
       System.out.println("destination");

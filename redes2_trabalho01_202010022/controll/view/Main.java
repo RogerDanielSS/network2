@@ -1,3 +1,12 @@
+/* *************************************************************** 
+* Autor............: Roger Daniel Santana Simoes
+* Matricula........: 202010022
+* Inicio...........: 06/02/2023
+* Ultima alteracao.: 19/02/2023
+* Nome.............: Inundação
+* Funcao...........: Simula o roteamento dentro de uma subrede usando inundação
+*************************************************************** */
+
 package redes2_trabalho01_202010022.controll.view;
 
 import java.io.File;
@@ -62,10 +71,24 @@ public class Main implements Initializable {
   ArrayList<Integer> bufferR6 = new ArrayList<>();
   ArrayList<Integer> bufferR7 = new ArrayList<>();
 
+  /*
+   * ***************************************************************
+   * Metodo: addPackageId
+   * Funcao: incrementa o contador da id dos packages gerais
+   * Parametros: vazio
+   * Retorno: vazio
+   */
   public synchronized int addPackageId() {
     return packageId++;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: chooseOriginAndDestination
+   * Funcao: permite que o usuário escolha a origem e o destino
+   * Parametros: string com o nome do local (ex: "host1")
+   * Retorno: vazio
+   */
   public void chooseOriginAndDestination(String spot) {
     if (origin == "")
       this.origin = spot;
@@ -75,10 +98,24 @@ public class Main implements Initializable {
     }
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: addDelivered
+   * Funcao: incrementa o contador da id dos packages gerais
+   * Parametros: vazio
+   * Retorno: vazio
+   */
   public synchronized int addDelivered() {
     return delivered++;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: instatiateSpots
+   * Funcao: intancia e inicializa os spots ("hosts" e "routers")
+   * Parametros: vazio
+   * Retorno: vazio
+   */
   private void instatiateSpots() {
     host1S = new Spot("host1");
     host2S = new Spot("host2");
@@ -157,6 +194,13 @@ public class Main implements Initializable {
     router7S.start();
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: getAllSpotsExcept
+   * Funcao: retorna todos spots (hosts e routers) exceto o passado como parametro
+   * Parametros: string com o spot e questão
+   * Retorno: arraylist com o nome dos spots esperados
+   */
   public ArrayList<String> getAllSpotsExcept(String spot) {
     ArrayList<String> spots = new ArrayList<>();
 
@@ -175,6 +219,14 @@ public class Main implements Initializable {
     return spots;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: inundationTable
+   * Funcao: retorna a tabela de inundacao baseado no spot em seus vizinhos
+   * Parametros: string que identifica o spot e arraylist de strings que
+   * identifica seus vizinhos
+   * Retorno: hash com a tabela de inundacao
+   */
   private Map<String, ArrayList<String>> inundationTable(String currentSpot, ArrayList<String> neightboors) {
     Map<String, ArrayList<String>> inundationTable = new HashMap<String, ArrayList<String>>();
 
@@ -186,20 +238,36 @@ public class Main implements Initializable {
     return inundationTable;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: addPackage
+   * Funcao: adiciona pacote a camada visual
+   * Parametros: int com a id do pacote a ser adicionado
+   * Retorno: vazio
+   */
   private void addPackage(int id) {
     background.getChildren().add(packages.get(id));
   }
 
-  private void addPackage(AnchorPane packagePane, int id) {
-    background.getChildren().add(packagePane);
-    packages.put(id, packagePane);
-  }
-
+  /*
+   * ***************************************************************
+   * Metodo: removePackage
+   * Funcao: retira um pacote da camada visual
+   * Parametros: AnchorPane com a id do pacote a ser removido
+   * Retorno: vazio
+   */
   private void removePackage(AnchorPane packagePane) {
     background.getChildren().remove(packagePane);
     packages.remove(packagePane);
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: getBuffer
+   * Funcao: retorna o buffer do spot
+   * Parametros: string que identifica o spot em questao
+   * Retorno: arralist com as ids armazenadas no buffer de cada ponto
+   */
   private ArrayList<Integer> getBuffer(String spot) {
     switch (spot) {
       case "host1":
@@ -234,6 +302,13 @@ public class Main implements Initializable {
     }
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: getCoordinates
+   * Funcao: retorna coordenadas de um spot
+   * Parametros: string que identifica o spot em questao
+   * Retorno: hash com coordenadas
+   */
   private Map<String, String> getCoordinates(String spot) {
     Map<String, String> coordinates = new HashMap<>();
     coordinates.put("name", spot);
@@ -283,6 +358,13 @@ public class Main implements Initializable {
     return coordinates;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: getSpot
+   * Funcao: retorna coordenadas de um spot
+   * Parametros: string que identifica o spot em questao
+   * Retorno: Imageview do spot
+   */
   private ImageView getSpot(String spot) {
     Map<String, String> coordinates = new HashMap<>();
     coordinates.put("name", spot);
@@ -311,6 +393,13 @@ public class Main implements Initializable {
     }
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: getSpot
+   * Funcao: retorna coordenadas de um spot
+   * Parametros: string que identifica o spot em questao
+   * Retorno: Imageview do spot
+   */
   private Spot getSpotThread(String spot) {
     Map<String, String> coordinates = new HashMap<>();
     coordinates.put("name", spot);
@@ -387,6 +476,14 @@ public class Main implements Initializable {
     return id;
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setPackagePosition
+   * Funcao: coloca o pacote visualmente na posicao correta
+   * Parametros: anchorPane do pacote e o controlador que armanzena seus
+   * respectivos dados
+   * Retorno: vazio
+   */
   private void setPackagePosition(AnchorPane packagePane, Package packageController) {
     ArrayList<Map<String, String>> path = packageController.getPath();
 
@@ -396,6 +493,14 @@ public class Main implements Initializable {
     packagePane.setLayoutY(subOrigin.getLayoutY() + subOrigin.getFitHeight() / 2);
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setPackageOriginAndDestination
+   * Funcao: adiciona a origem e o destino ao controlador de um pacote
+   * Parametros:id que identifica o pacote, string que identifica a origem e
+   * string que identifica o destino
+   * Retorno: vazio
+   */
   private void setPackageOriginAndDestination(int id, String origin, String destination) {
     packages.get(id).setLayoutX(getSpot(origin).getLayoutX() + getSpot(origin).getFitWidth() / 2);
     packages.get(id).setLayoutY(getSpot(origin).getLayoutY() + getSpot(origin).getFitHeight() / 2);
@@ -404,8 +509,21 @@ public class Main implements Initializable {
         getCoordinates(destination));
   }
 
+  /*
+   * ***************************************************************
+   * Metodo: setPackageOriginAndDestination
+   * Funcao: adiciona a origem e o destino ao controlador de um pacote
+   * Parametros:id que identifica o pacote, string que identifica a origem e
+   * string que identifica o destino
+   * Retorno: vazio
+   */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    /*
+     * ***************************************************************
+     * Metodo: start
+     * Funcao: controla acoes do botao start
+     */
     start.setOnAction(event -> {
       instatiateSpots();
 
@@ -418,6 +536,11 @@ public class Main implements Initializable {
       start.setVisible(false);
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: opcao1
+     * Funcao: seleciona opcao 1
+     */
     opcao1.setOnAction(event -> {
       option1 = !option1;
       if (opcao1.getOpacity() == 1)
@@ -427,6 +550,11 @@ public class Main implements Initializable {
 
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: opcao2
+     * Funcao: seleciona opcao 2
+     */
     opcao2.setOnAction(event -> {
       option2 = !option2;
       if (opcao2.getOpacity() == 1)
@@ -436,6 +564,11 @@ public class Main implements Initializable {
 
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: opcao3
+     * Funcao: seleciona opcao 3
+     */
     opcao3.setOnAction(event -> {
       option3 = !option3;
       if (opcao3.getOpacity() == 1)
@@ -444,38 +577,83 @@ public class Main implements Initializable {
         opcao3.setOpacity(1);
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: h1
+     * Funcao: seleciona o host 1 como origem ou destino
+     */
     h1.setOnAction(event -> {
       chooseOriginAndDestination("host1");
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: h2
+     * Funcao: seleciona o host 2 como origem ou destino
+     */
     h2.setOnAction(event -> {
       chooseOriginAndDestination("host2");
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: r1
+     * Funcao: seleciona o router 1 como origem ou destino
+     */
     r1.setOnAction(event -> {
       chooseOriginAndDestination("router1");
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: r2
+     * Funcao: seleciona o router 2 como origem ou destino
+     */
     r2.setOnAction(event -> {
       chooseOriginAndDestination("router2");
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: r3
+     * Funcao: seleciona o router 3 como origem ou destino
+     */
     r3.setOnAction(event -> {
       chooseOriginAndDestination("router3");
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: r4
+     * Funcao: seleciona o router 4 como origem ou destino
+     */
     r4.setOnAction(event -> {
       chooseOriginAndDestination("router4");
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: r5
+     * Funcao: seleciona o router 5 como origem ou destino
+     */
     r5.setOnAction(event -> {
       chooseOriginAndDestination("router5");
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: r6
+     * Funcao: seleciona o router 6 como origem ou destino
+     */
     r6.setOnAction(event -> {
       chooseOriginAndDestination("router6");
     });
 
+    /*
+     * ***************************************************************
+     * Metodo: h1
+     * Funcao: seleciona o router 7 como origem ou destino
+     */
     r7.setOnAction(event -> {
       chooseOriginAndDestination("router7");
     });
@@ -483,6 +661,13 @@ public class Main implements Initializable {
 
   private class PackageManager extends Thread {
 
+    /*
+     * ***************************************************************
+     * Metodo: send
+     * Funcao: anima ou coloca o pacote no buffer de um roteador
+     * Parametros:id que identifica o pacote
+     * Retorno: vazio
+     */
     private void send(int id) {
       if (packages.get(id) != null)
         if (packagesControllers.get(id).getLife() <= 0 || packagesControllers.get(id).dead()) {
@@ -520,6 +705,13 @@ public class Main implements Initializable {
         }
     }
 
+    /*
+     * ***************************************************************
+     * Metodo: run
+     * Funcao: executa a thread
+     * Parametros: vazio
+     * Retorno: vazio
+     */
     public void run() {
       while (true) {
 
@@ -549,10 +741,22 @@ public class Main implements Initializable {
     private Map<String, ArrayList<String>> routingTable;
     private int latestId = 0;
 
+    /*
+     * ***************************************************************
+     * Metodo: Spot
+     * Funcao: controi um objeto da classe spot
+     * Parametros: string com o nome do spot a ser identificado
+     */
     public Spot(String spot) {
       this.currentSpot = spot;
     }
 
+    /*
+     * ***************************************************************
+     * Metodo: Spot
+     * Funcao: controi um objeto da classe spot
+     * Parametros: string com o nome do spot a ser identificado
+     */
     public void newPackage(String origin, String destination) {
       int id = createPackage();
 
@@ -573,6 +777,14 @@ public class Main implements Initializable {
       addPackage(id);
     }
 
+    /*
+     * ***************************************************************
+     * Metodo: newPackage
+     * Funcao: cria um novo pacote adicionando um spot ao path do pacote
+     * Parametros: controlador do pacote, string com o nome de spot e path legado a
+     * ser passado para o novo pacote
+     * Retorno: vazio
+     */
     public void newPackage(Package packag, String subdestination, ArrayList<Map<String, String>> path) {
       int id = createPackage(packag, path);
 
@@ -586,14 +798,35 @@ public class Main implements Initializable {
       });
     }
 
+    /*
+     * ***************************************************************
+     * Metodo: addBuffer
+     * Funcao: adiciona um pacote ao buffer do spot
+     * Parametros: id que identifica o pacote
+     * Retorno: vazio
+     */
     public void addBuffer(int id) {
       getBuffer(currentSpot).add(id);
     }
 
+    /*
+     * ***************************************************************
+     * Metodo: getFirstPackageIdInBuffer
+     * Funcao: retorna o primeiro pacote no buffer
+     * Parametros: vazio
+     * Retorno: pacote
+     */
     public int getFirstPackageIdInBuffer() {
       return getBuffer(currentSpot).get(0);
     }
 
+    /*
+     * ***************************************************************
+     * Metodo: sendFirstPackageInBuffer
+     * Funcao: envia para os demais roteradores o primeiro pacote no buffer
+     * Parametros: vazio
+     * Retorno: vazio
+     */
     public void sendFirstPackageInBuffer() {
       int id = getBuffer(currentSpot).remove(0);
       latestId = packagesControllers.get(id).getNetworkId();
@@ -619,38 +852,35 @@ public class Main implements Initializable {
 
     }
 
+    /*
+     * ***************************************************************
+     * Metodo: buffer
+     * Funcao: retorna o buffer do spot
+     * Parametros: vazio
+     * Retorno: buffer do spot
+     */
     private ArrayList<Integer> buffer() {
       return getBuffer(currentSpot);
     }
 
+    /*
+     * ***************************************************************
+     * Metodo: setRoutingTable
+     * Funcao: setta a tabeta de roteamento do roteador
+     * Parametros: tabela de roteamento a ser inserida
+     * Retorno: vazio
+     */
     public void setRoutingTable(Map<String, ArrayList<String>> routingTable) {
       this.routingTable = routingTable;
     }
 
-    public void addToRoutingTable(String key, String value) {
-      ArrayList<String> routes = this.routingTable.get(key);
-
-      routes.add(value);
-
-      this.routingTable.put(key, routes);
-    }
-
-    public void ReplaceRouteInRoutingTable(String key, String value) {
-      ArrayList<String> routes = new ArrayList<String>();
-
-      routes.add(value);
-
-      this.routingTable.put(key, routes);
-    }
-
-    public void setCurrentSpot(String currentSpot) {
-      this.currentSpot = currentSpot;
-    }
-
-    public String name() {
-      return this.currentSpot;
-    }
-
+    /*
+     * ***************************************************************
+     * Metodo: run
+     * Funcao: executa a thread
+     * Parametros: vazio
+     * Retorno: vazio
+     */
     public void run() {
       while (true) {
         if (this.buffer() != null && this.buffer().size() > 0) {
