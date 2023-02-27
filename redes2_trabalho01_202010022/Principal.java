@@ -1,3 +1,4 @@
+
 /* *************************************************************** 
 * Autor............: Roger Daniel Santana Simoes
 * Matricula........: 202010022
@@ -9,6 +10,8 @@
 import java.io.File;
 import java.net.URL;
 
+import controll.view.Main;
+import controll.view.components.Package;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +28,10 @@ public class Principal extends Application { // Inicio da classe Principal
    */
   public static void main(String[] args) throws Exception { // inicio do metodo main
     launch(args);
+
+    Main main = new Main();
+    Package packag = new Package();
+
   }// fim do metodo main
 
   /*
@@ -38,7 +45,8 @@ public class Principal extends Application { // Inicio da classe Principal
   public void start(Stage stage) throws Exception { // inicio do metodo start
     URL url = new File("view/main.fxml").toURI().toURL();
     Parent root = FXMLLoader.load(url);
-    // Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("/view/main.fxml"));
+    // Parent root =
+    // FXMLLoader.load(getClass().getClassLoader().getResource("/view/main.fxml"));
     Scene Scene = new Scene(root);
     stage.setScene(Scene);
     stage.setResizable(false);
